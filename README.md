@@ -1,4 +1,4 @@
-# Store Rating     (if you want to see the website , please clone the repo and run it on your local machine)
+# Store Rating     
 
 This is a basic web application where users can rate stores. It has three types of users: User, Store Owner, and Admin.
 
@@ -45,7 +45,7 @@ Start the server
 Open the app in your browser at:  http://localhost:3000
 Make sure MongoDB is running locally.
 
-
+(if you want to see the website , please clone the repo and run it on your local machine)
 ##github link
 https://github.com/karan-7058/Store-Rating-App.git
 
