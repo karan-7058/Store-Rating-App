@@ -1,0 +1,47 @@
+<% title = "Store Owner Dashboard" %>
+
+<div class="card p-4 mb-4 shadow-sm" style="max-width: 600px;">
+  <h3>👋 Welcome, <%= user.name %></h3>
+  <p><strong>Role:</strong> <%= user.role %></p>
+
+  <div class="d-flex gap-2 mt-2">
+    <a href="/update-password" class="btn btn-warning">🔒 Update Password</a>
+    <a href="/logout" class="btn btn-danger">Logout</a>
+  </div>
+
+</div>
+
+<% if (!store) { %>
+  <div class="alert alert-warning">❗ No store assigned to your account yet.</div>
+<% } else { %>
+  <div class="card mb-4 p-3 shadow-sm">
+    <h4>Your Store: <%= store.name %></h4>
+    <p><strong>Address:</strong> <%= store.address %></p>
+    <p><strong>Average Rating:</strong> <%= avgRating %></p>
+  </div>
+
+  <h5 class="mb-3">Users Who Rated</h5>
+
+  <% if (ratings.length === 0) { %>
+    <div class="alert alert-info">No ratings yet.</div>
+  <% } else { %>
+    <table class="table table-bordered table-striped">
+      <thead class="table-light">
+        <tr>
+          <th>User Name</th>
+          <th>Email</th>
+          <th>Rating</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% ratings.forEach(r => { %>
+          <tr>
+            <td><%= r.user.name %></td>
+            <td><%= r.user.email %></td>
+            <td><%= r.value %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+<% } %>

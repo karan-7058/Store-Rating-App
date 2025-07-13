@@ -1,0 +1,55 @@
+<% title = 'User Dashboard' %>
+
+<div class="card p-4 mb-4 shadow-sm" style="max-width: 600px;">
+  <h3>👋 Welcome, <%= user.name %></h3>
+  <p><strong>Role:</strong> <%= user.role %></p>
+  <div class="d-flex gap-2 mt-2">
+    <a href="/update-password" class="btn btn-warning">🔒 Update Password</a>
+    <a href="/logout" class="btn btn-danger">Logout</a>
+  </div>
+</div>
+
+<form class="row g-3 mb-4" method="GET" action="/user/dashboard">
+  <div class="col-md-5">
+    <input name="name" class="form-control" placeholder="Search by name" value="<%= filters.name || '' %>" />
+  </div>
+  <div class="col-md-5">
+    <input name="address" class="form-control" placeholder="Search by address" value="<%= filters.address || '' %>" />
+  </div>
+  <div class="col-md-2">
+    <button type="submit" class="btn btn-primary w-100">Search</button>
+  </div>
+</form>
+
+<table class="table table-bordered table-striped">
+  <thead class="table-light">
+    <tr>
+      <th>Store Name</th>
+      <th>Address</th>
+      <th>Overall Rating</th>
+      <th>Your Rating</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% stores.forEach(store => { %>
+      <tr>
+        <td><%= store.name %></td>
+        <td><%= store.address %></td>
+        <td><%= store.avgRating %></td>
+        <td><%= store.userRating !== null ? store.userRating : "Not rated" %></td>
+        <td>
+          <form method="POST" action="/user/rate" class="d-flex gap-2 align-items-center">
+            <input type="hidden" name="storeId" value="<%= store._id %>">
+            <select name="value" class="form-select form-select-sm" required style="width: 70px;">
+              <% for(let i=1;i<=5;i++) { %>
+                <option value="<%= i %>" <%= store.userRating === i ? "selected" : "" %>><%= i %></option>
+              <% } %>
+            </select>
+            <button class="btn btn-sm btn-primary">Submit</button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
