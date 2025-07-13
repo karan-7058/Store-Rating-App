@@ -1,5 +1,7 @@
 <% title = 'User Dashboard' %>
 
+<div class="row">
+ <div class="col-md-6 offset-md-3">
 <div class="card p-4 mb-4 shadow-sm" style="max-width: 600px;">
   <h3>👋 Welcome, <%= user.name %></h3>
   <p><strong>Role:</strong> <%= user.role %></p>
@@ -7,6 +9,8 @@
     <a href="/update-password" class="btn btn-warning">🔒 Update Password</a>
     <a href="/logout" class="btn btn-danger">Logout</a>
   </div>
+</div>
+</div> 
 </div>
 
 <form class="row g-3 mb-4" method="GET" action="/user/dashboard">
