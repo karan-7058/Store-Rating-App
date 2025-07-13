@@ -1,4 +1,4 @@
-# Store Rating 
+# Store Rating     (if you want to see the website , please clone the repo and run it on your local machine)
 
 This is a basic web application where users can rate stores. It has three types of users: User, Store Owner, and Admin.
 
