@@ -5,11 +5,12 @@ This is a basic web application where users can rate stores. It has three types 
 ## Technologies Used
 (right now i dont have knowledge about React , thats why i used ejs templates for dynamic page rendering and use some bootstrap classes for styling )
 
-Node.js
- Express.js
- MongoDB with Mongoose
- EJS Templates
-Bootstrap for styling
+- Node.js
+-Express.js
+- MongoDB with Mongoose
+- javascript
+- EJS Templates
+-Bootstrap for styling
 
 
 # Features
