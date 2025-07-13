@@ -46,5 +46,6 @@ Open the app in your browser at:  http://localhost:3000
 Make sure MongoDB is running locally.
 
 
-
+##github link
+https://github.com/karan-7058/Store-Rating-App.git
 
