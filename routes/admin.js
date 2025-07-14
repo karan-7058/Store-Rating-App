@@ -126,7 +126,7 @@ router.get("/admin/stores", isAdmin, async (req, res) => {
 
 
 //delete user
-router.post('/users/:id/delete', async (req, res) => {
+router.post('/admin/users/:id/delete', async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
 
