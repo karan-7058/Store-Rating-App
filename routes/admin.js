@@ -125,6 +125,29 @@ router.get("/admin/stores", isAdmin, async (req, res) => {
 });
 
 
+//delete user
+router.post('/users/:id/delete', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
+
+    if (user.role === 'admin') {
+      return res.status(403).send('Cannot delete admin user');
+    }
+
+    await user.deleteOne(); // triggers post middleware
+    res.redirect('/admin/users');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error deleting user');
+  }
+});
+
+
+
 
 
 
