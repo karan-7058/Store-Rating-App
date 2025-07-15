@@ -1,10 +1,12 @@
 
 <% title = "Register" %>
 
-<h2 class="mb-4">Register</h2>
+<div class="row">
+  <div class="col-md-6 offset-md-3">
+<h2 class="mb-4 offset-md-4">Register</h2>
 
-<form action="/register" method="POST" class="card p-4 shadow-sm" style="max-width: 600px;">
-  <div class="mb-3">
+<form action="/register" method="POST" class="card p-4 shadow-sm " style="max-width: 600px;">
+  <div class="mb-3 ">
     <label>Name</label>
     <input type="text" name="name" class="form-control" required />
   </div>
@@ -30,6 +32,8 @@
   </div>
   <button class="btn btn-primary">Register</button>
 </form>
+</div>
+</div>
 
 <script>
 function validateForm() {
