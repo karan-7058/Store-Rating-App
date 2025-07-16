@@ -56,7 +56,11 @@ app.use("/", storeOwnerRoutes);
 
 
 
+app.use((err , req , res , next)=>{
+   let {status=500  , message="something went wrong"}=err;
+   res.status(status).send(message);
 
+});
 
 
 
