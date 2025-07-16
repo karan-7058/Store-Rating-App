@@ -10,11 +10,16 @@ router.get("/register", (req, res) => {
 
 // Register - POST
 router.post("/register", async (req, res) => {
+  try {
   const { name, email, password, address, role } = req.body;
   const hash = await bcrypt.hash(password, 10);
   const user = new User({ name, email, address, password: hash, role });
   await user.save();
   res.redirect("/login");
+  } catch (error) {
+    res.status(500).send("Internal Server Error");
+  }
+  
 });
 
 // Login - GET
