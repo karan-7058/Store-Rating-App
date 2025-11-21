@@ -19,10 +19,10 @@ exports.getStats=async (req, res , next)=>{
 
   try{
     const [[{totalUsers}]] = await conn.query('SELECT COUNT(*) AS totalUsers FROM users');
-    const [[{totalPosts}]] = await conn.query('SELECT COUNT(*) AS totalPosts FROM posts');
+    const [[{totalStores}]] = await conn.query('SELECT COUNT(*) AS totalStores FROM stores');
     const [[{totalRatings}]] =await conn.query('SELECT COUNT(*) AS totalRatings FROM ratings');
 
-    res.json({totalUsers, totalPosts, totalRatings});
+    res.json({totalUsers, totalStores, totalRatings});
 
   } catch (err) {
     next(err);
