@@ -1,7 +1,7 @@
 const API = "http://localhost:3000";
 
 export async function login(email, password) {
-  const res = await fetch(`${API}/login`, {
+  const res = await fetch(`${API}/auth/login`, {
     method: "POST",
     credentials: "include",
     headers: { "Content-Type": "application/json" },
@@ -11,19 +11,20 @@ export async function login(email, password) {
   return res.json();
 }
 
-export async function signup(email, password, name) {
-  const res = await fetch(`${API}/signup`, {
+export async function signup(payload) {
+  const res = await fetch(`${API}/auth/signup`, {
     method: "POST",
     credentials: "include",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password, name }),
+    body: JSON.stringify(payload),
   });
 
   return res.json();
 }
 
+
 export async function getSession() {
-  const res = await fetch(`${API}/me`, {
+  const res = await fetch(`${API}/auth/me`, {
     credentials: "include"
   });
 
@@ -31,7 +32,7 @@ export async function getSession() {
 }
 
 export async function logout() {
-  const res = await fetch(`${API}/logout`, {
+  const res = await fetch(`${API}/auth/logout`, {
     method: "POST",
     credentials: "include"
   });
