@@ -28,10 +28,11 @@ app.use(session({
 }));
 
 // Routes mounted similar to original app.js
-app.use('/', adminRoutes);
-app.use('/', userRoutes);
-app.use('/', authRoutes);
-app.use('/', storeOwnerRoutes);
+app.use('/admin', adminRoutes);
+app.use('/auth', authRoutes);
+app.use('/user', userRoutes);
+app.use('/owner', storeOwnerRoutes);
+
 
 app.get('/', (req, res) => {
 
