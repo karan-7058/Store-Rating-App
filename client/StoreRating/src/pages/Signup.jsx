@@ -7,18 +7,31 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [role, setRole] = useState(""); // 👈 NEW
+
   const { setUser } = useAuth();
   const navigate = useNavigate();
 
   async function handleSubmit(e) {
     e.preventDefault();
 
-    const data = await signup(email, password, name);
-
-    if (data.user) {
-      setUser(data.user);
-      navigate("/");
+    if (!role) {
+      alert("Please select a role");
+      return;
     }
+
+    const data = await signup({
+      name,
+      email,
+      password,
+      role_id: Number(role),
+    });
+
+    if (data.message) {
+     navigate("/login");
+   }
+
+   
   }
 
   return (
@@ -44,6 +57,14 @@ export default function Signup() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         /><br/>
+
+        {/* 👇 ROLE SELECTION */}
+        <select value={role} onChange={(e) => setRole(e.target.value)}>
+          <option value="">Select Role</option>
+          <option value="2">Normal User</option>
+          <option value="3">Store Owner</option>
+        </select>
+        <br/>
 
         <button>Signup</button>
       </form>
