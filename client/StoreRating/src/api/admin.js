@@ -32,3 +32,17 @@ export async function deleteAdminStore(id) {
   });
   return res.json();
 }
+
+// Create store (ADMIN)
+export async function createAdminStore(storeData) {
+  const res = await fetch(`${API}/admin/stores`, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(storeData),
+  });
+
+  return res.json();
+}
