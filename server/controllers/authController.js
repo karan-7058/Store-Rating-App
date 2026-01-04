@@ -2,25 +2,48 @@ const bcrypt = require('bcrypt');
 const pool = require('../db');
 
 
-exports.signup=async (req, res, next) => {
-  const { email, password, name } = req.body;
-  if (!email || !password) return res.status(400).json({ error: 'Missing email or password' });
+exports.signup = async (req, res, next) => {
+  const { email, password, name, role_id } = req.body;
+
+  if (!email || !password || !role_id)
+    return res.status(400).json({ error: "Missing required fields" });
+
+  // 🚫 block admin registration
+  if (![2, 3].includes(Number(role_id)))
+    return res.status(400).json({ error: "Invalid role" });
+
   const conn = await pool.getConnection();
+
   try {
-    const [existing] = await conn.query('SELECT id FROM users WHERE email = ?', [email]);
-    if (existing.length) return res.status(400).json({ error: 'Email already exists' });
+    const [existing] = await conn.query(
+      "SELECT id FROM users WHERE email = ?",
+      [email]
+    );
+
+    if (existing.length)
+      return res.status(400).json({ error: "Email already exists" });
+
     const password_hash = await bcrypt.hash(password, 10);
-    const [result] = await conn.query('INSERT INTO users (email, password_hash, name) VALUES (?, ?, ?)', [email, password_hash, name || null]);
-    const userId = result.insertId;
-    const [rows] = await conn.query('SELECT id, email, name, role_id FROM users WHERE id = ?', [userId]);
-    req.session.user = rows[0];
-    res.json({ user: req.session.user });
+
+    // 👇 role_id is NOW saved
+    const [result] = await conn.query(
+      "INSERT INTO users (email, password_hash, name, role_id) VALUES (?, ?, ?, ?)",
+      [email, password_hash, name || null, Number(role_id)]
+    );
+
+     res.json({
+      message: "Signup successful. Please login."
+    });
+
+  
+
   } catch (err) {
     next(err);
   } finally {
     conn.release();
   }
 };
+
 
 
 exports.login=async (req, res, next) => {
@@ -49,4 +72,13 @@ exports.logout=(req, res) => {
     res.clearCookie('sid');
     res.json({ ok: true });
   });
+};
+
+
+exports.getMe = (req, res) => {
+  if (!req.session.user) {
+    return res.status(401).json({ user: null });
+  }
+
+  res.json({ user: req.session.user });
 };
