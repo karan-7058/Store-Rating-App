@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getAdminStats } from "../api/admin";
+import { Link } from "react-router-dom";
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState(null);
@@ -24,6 +25,8 @@ export default function AdminDashboard() {
         <p><strong>Total Ratings:</strong> {stats.totalRatings}</p>
         <p><strong>Total Stores:</strong> {stats.totalStores}</p>
       </div>
+
+       <Link to="/">logout</Link>
     </div>
   );
 }
