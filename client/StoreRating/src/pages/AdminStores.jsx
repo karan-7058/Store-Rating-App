@@ -1,13 +1,53 @@
 import { useEffect, useState } from "react";
-import { getAdminStores, deleteAdminStore } from "../api/admin";
+import {  createAdminStore ,getAdminStores, deleteAdminStore } from "../api/admin";
 
 export default function AdminStores() {
   const [stores, setStores] = useState([]);
+
+  const [showForm, setShowForm] = useState(false);
+
+const [form, setForm] = useState({
+  name: "",
+  description: "",
+  address: "",
+  created_by: "",
+});
 
   async function loadStores() {
     const data = await getAdminStores();
     setStores(data);
   }
+
+  async function handleCreateStore(e) {
+  e.preventDefault();
+
+  if (!form.name || !form.created_by) {
+    alert("Store name and owner ID are required");
+    return;
+  }
+
+  const res = await createAdminStore(form);
+
+  if (res.error) {
+    alert(res.error);
+    return;
+  }
+
+  // reset form
+  setForm({
+    name: "",
+    description: "",
+    address: "",
+    created_by: "",
+  });
+
+  // close form
+  setShowForm(false);
+
+  // refresh store list
+  loadStores();
+}
+
 
   async function handleDelete(id) {
     if (!confirm("Delete this store?")) return;
@@ -29,6 +69,48 @@ export default function AdminStores() {
   return (
     <div style={{ padding: "20px" }}>
       <h1>All Stores</h1>
+
+      <button
+  onClick={() => setShowForm(!showForm)}
+  style={{ marginBottom: "20px" }}
+>
+  {showForm ? "Cancel" : "Create Store"}
+</button>
+
+{showForm && (
+  <form onSubmit={handleCreateStore} style={{ marginBottom: "30px" }}>
+    <input
+      placeholder="Store Name"
+      value={form.name}
+      onChange={(e) => setForm({ ...form, name: e.target.value })}
+    />
+    <br /><br />
+
+    <input
+      placeholder="Description"
+      value={form.description}
+      onChange={(e) => setForm({ ...form, description: e.target.value })}
+    />
+    <br /><br />
+
+    <input
+      placeholder="Address"
+      value={form.address}
+      onChange={(e) => setForm({ ...form, address: e.target.value })}
+    />
+    <br /><br />
+
+    <input
+      placeholder="admn ID"
+      value={form.created_by}
+      onChange={(e) => setForm({ ...form, created_by: e.target.value })}
+    />
+    <br /><br />
+
+    <button type="submit">Save Store</button>
+  </form>
+)}
+
 
       {stores.length === 0 && <p>No stores available.</p>}
 
