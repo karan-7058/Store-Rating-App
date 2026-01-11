@@ -1,4 +1,4 @@
-const API = "http://localhost:3000";
+const API = "http://localhost:3000/user";
 
 // Get all stores
 export async function getAllStores() {
