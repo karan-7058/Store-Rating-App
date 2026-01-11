@@ -1,4 +1,4 @@
-const API = "http://localhost:3000";
+const API = "http://localhost:3000/user";
 
 // Update rating
 export async function updateRating(id, score, comment) {
