@@ -26,7 +26,7 @@ export default function AdminDashboard() {
         <p><strong>Total Stores:</strong> {stats.totalStores}</p>
       </div>
 
-       <Link to="/">logout</Link>
+       
     </div>
   );
 }
