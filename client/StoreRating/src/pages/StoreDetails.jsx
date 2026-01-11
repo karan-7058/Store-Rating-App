@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams , Link } from "react-router-dom";
 import { getStoreDetails, addRating } from "../api/store";
 import { updateRating, deleteRating } from "../api/ratings";
 import { useAuth } from "../context/AuthContext";
@@ -157,8 +157,10 @@ export default function StoreDetails() {
           </button>
         </form>
       ) : (
-        <p style={{ marginTop: "20px" }}>Login to add a rating.</p>
-      )}
+       <p style={{ marginTop: "20px" }}>
+       <Link to="/login">Login</Link> to rate this store.
+       </p>
+  )}
     </div>
   );
 }
