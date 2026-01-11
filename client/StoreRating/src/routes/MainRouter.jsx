@@ -30,12 +30,7 @@ const MainRouter = createBrowserRouter([
       { path: "/signup", element: <Signup /> },
       {
         path: "/stores/:id",
-        element: (
-          <ProtectedRoute>
-            <StoreDetails />
-          </ProtectedRoute>
-        ),
-      },
+        element: <StoreDetails />},
     ],
   },
 
