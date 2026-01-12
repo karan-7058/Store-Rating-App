@@ -62,7 +62,7 @@ exports.updateRating= async (req , res , next)=>{
 
   if(!score || score <1 || score >5 ) return res.status(400).json({error:"invalid score"});
 
-  const conn= await pool.getConneection();
+  const conn= await pool.getConnection();
 
   try{
     const [rows]=  await conn.query('SELECT * FROM ratings WHERE id =? AND user_id=?', [RatingId , userId]);
@@ -87,10 +87,10 @@ exports.deleteRating= async(req, res , next)=>{
   const conn= await pool.getConnection();
 
   try{
-    const [rows]= await conn.query('SELECT * FROM rating WHERE id=? AND user_id=?'  , [RatingId , userId]);
+    const [rows]= await conn.query('SELECT * FROM ratings WHERE id=? AND user_id=?'  , [RatingId , userId]);
     if(!rows.length) return res.status(404).json({error:"rating not founds"});
 
-    await conn.query('DELETE FROM rating WHERE id=?' , [RatingId]);
+    await conn.query('DELETE FROM ratings WHERE id=?' , [RatingId]);
 
     res.json({ok:true , message:"rating deleted successfully "});
 
