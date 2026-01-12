@@ -5,12 +5,14 @@ const storeOwnerController = require("../controllers/storeOwnerController");
 
 
 // Owner: Get all stores owned by this store owner
-router.get("/owner/stores", requireStoreOwner, storeOwnerController.getStoresByOwner);
+router.get("/stores", requireStoreOwner, storeOwnerController.getStoresByOwner);
 
 // Owner: View ratings for a specific store (owned by them)
-router.get("/owner/stores/:id/ratings", requireStoreOwner, storeOwnerController.getStoreRatings);
+router.get("/stores/:id/ratings", requireStoreOwner, storeOwnerController.getStoreRatings);
 
-router.put("/owner/stores/:id" , requireStoreOwner , storeOwnerController.updateStoreByOwner);
+router.put("/stores/:id" , requireStoreOwner , storeOwnerController.updateStoreByOwner);
+router.post('/stores', requireStoreOwner, storeOwnerController.createStore);
+
 
 
 module.exports = router;
