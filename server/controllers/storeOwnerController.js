@@ -1,6 +1,48 @@
 const pool = require("../db");
 
 
+
+
+exports.createStore = async (req, res, next) => {
+  const ownerId = req.session.user.id;
+  const { name, description, address } = req.body;
+
+  const conn = await pool.getConnection();
+  try {
+    // 🔒 Check if owner already has a store
+    const [existing] = await conn.query(
+      "SELECT id FROM stores WHERE created_by = ?",
+      [ownerId]
+    );
+
+    if (existing.length > 0) {
+      return res.status(400).json({
+        error: "You can create only one store",
+      });
+    }
+
+    // ✅ Create store
+    const [result] = await conn.query(
+      `INSERT INTO stores (name, description, address, created_by)
+       VALUES (?, ?, ?, ?)`,
+      [name, description, address, ownerId]
+    );
+
+    res.status(201).json({
+      id: result.insertId,
+      name,
+      description,
+      address,
+    });
+  } catch (err) {
+    next(err);
+  } finally {
+    conn.release();
+  }
+};
+
+
+
 exports.getStoresByOwner = async (req, res, next) => {
   const ownerId = req.session.user.id;
 
